@@ -20,6 +20,9 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
+@app.route("/")
+def hello_world():
+    return "Hello world"
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -29,6 +32,7 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
+    print(body)
 
     # handle webhook body
     try:
@@ -41,12 +45,17 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    push_text = event.message.text
+    if push_text == "五条悟":
+        reply_text = "領域展開！！"
+    else:
+        reply_text=push_text
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text=reply_text))
 
 
 if __name__ == "__main__":
     #    app.run()
-    port = int(os.getenv("PORT", 5000))
+    port = int(os.getenv("PORT",5000))
     app.run(host="0.0.0.0", port=port)
