@@ -11,7 +11,7 @@ from linebot.models import (
 )
 import os
 
-from googleapiclient.discovery import build
+from apiclient.discovery import build
 
 app = Flask(__name__)
 
