@@ -20,6 +20,9 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
+@app.route("/")
+def hello_world():
+    return "Hello_world"
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -29,6 +32,7 @@ def callback():
     # get request body as text
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
+    print(body)
 
     # handle webhook body
     try:
