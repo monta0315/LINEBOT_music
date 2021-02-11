@@ -45,12 +45,17 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    push_text = event.message.text
+    if push_text == "五条悟":
+        reply_text = "領域展開！！"
+    else:
+        reply_text=push_text
     line_bot_api.reply_message(
         event.reply_token,
-        TextSendMessage(text=event.message.text))
+        TextSendMessage(text=reply_text))
 
 
 if __name__ == "__main__":
     #    app.run()
-    port = int(os.getenv("PORT"))
+    port = int(os.getenv("PORT,5000"))
     app.run(host="0.0.0.0", port=port)
