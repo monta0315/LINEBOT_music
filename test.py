@@ -26,16 +26,6 @@ YOUTUBE_API_KEY = "AIzaSyDWbuxE3tzF4RMnCjC045fPy5Cp9GYRHXM"
 
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
 
-@app.route("/")
-def hello_world():
-    search_response = youtube.search().list(
-        part='snippet',
-        q="うんこちゃん",
-        order="viewCount",
-        type='video',
-    ).execute()
-    reply_video = search_response["items"][0]
-    return reply_video
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -67,10 +57,10 @@ def handle_message(event):
         order="viewCount",
         type='video',
     ).execute()
-    reply_video=search_response["items"][0]
+    reply_video=search_response["items"][0]["id"]["videoId"]
     line_bot_api.reply_message(
         event.reply_token,
-        messages=reply_video)
+        TextSendMessage(text="https://youtu.be/"+reply_video))
 
 
 if __name__ == "__main__":
