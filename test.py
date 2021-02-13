@@ -241,14 +241,16 @@ def handle_message(event):
             ]
         }
     }
-    container_obj = FlexSendMessage(
-        alt_text='hello',
-        contents=msg
-        )
 
 
     #メッセージを送信するフェーズ
-    line_bot_api.reply_message(event.reply_token, messages=container_obj)
+    line_bot_api.reply_message(
+        event.reply_token,
+        FlexSendMessage(
+            alt_text='hello',
+            contents=msg
+            )
+        )
 
 
 if __name__ == "__main__":
