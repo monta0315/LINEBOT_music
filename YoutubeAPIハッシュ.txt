@@ -1,0 +1,9 @@
+{'kind': 'youtube#searchResult',
+ 'etag': 'gK4KyMhJBZjOOmFdBB5s2iXG7gI',
+ 'id': {'kind': 'youtube#video', 'videoId': 'MwxgUVrj5m4'},
+ 'snippet': {'publishedAt': '2018-08-27T10:00:04Z',
+             'channelId': 'UC-wNjNTqCfXSKd4S1tNgWUg',
+             'title': 'PSYQUI - ヒステリックナイトガール feat. Such (android52 Edit)',
+             'description': '▽ Anime Name : - 秒速5センチメートル (5 Centimeters per Second)',
+             'thumbnails': {'default': {'url': 'https://i.ytimg.com/vi/MwxgUVrj5m4/default.jpg', 'width': 120, 'height': 90},
+             'medium': {'url': 'https://i.ytimg.com/vi/MwxgUVrj5m4/mqdefault.jpg', 'width': 320, 'height': 180}, 'high': {'url': 'https://i.ytimg.com/vi/MwxgUVrj5m4/hqdefault.jpg', 'width': 480, 'height': 360}}, 'channelTitle': 'Waifu Wednesdays', 'liveBroadcastContent': 'none', 'publishTime': '2018-08-27T10:00:04Z'}}
