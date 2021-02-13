@@ -95,7 +95,7 @@ def handle_message(event):
                 {
                     "type": "text",
                     "text": "BROWN'S ADVENTURE\nIN MOVIE",
-                    "wrap": true,
+                    "wrap": True,
                     "weight": "bold",
                     "gravity": "center",
                     "size": "xl"
@@ -161,7 +161,7 @@ def handle_message(event):
                                 {
                                     "type": "text",
                                     "text": "Monday 25, 9:00PM",
-                                    "wrap": true,
+                                    "wrap": True,
                                     "size": "sm",
                                     "color": "#666666",
                                     "flex": 4
@@ -183,7 +183,7 @@ def handle_message(event):
                                 {
                                     "type": "text",
                                     "text": "7 Floor, No.3",
-                                    "wrap": true,
+                                    "wrap": True,
                                     "color": "#666666",
                                     "size": "sm",
                                     "flex": 4
@@ -205,7 +205,7 @@ def handle_message(event):
                                 {
                                     "type": "text",
                                     "text": "C Row, 18 Seat",
-                                    "wrap": true,
+                                    "wrap": True,
                                     "color": "#666666",
                                     "size": "sm",
                                     "flex": 4
@@ -232,7 +232,7 @@ def handle_message(event):
                             "type": "text",
                             "text": "You can enter the theater by using this code instead of a ticket",
                             "color": "#aaaaaa",
-                            "wrap": true,
+                            "wrap": True,
                             "margin": "xxl",
                             "size": "xs"
                         }
