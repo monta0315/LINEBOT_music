@@ -11,11 +11,13 @@ from linebot.models import (
 )
 
 from linebot.exceptions import LineBotApiError
+
 from linebot.models import (
     CarouselColumn, CarouselTemplate, FollowEvent,
     LocationMessage, MessageEvent, TemplateSendMessage,
     TextMessage, TextSendMessage, UnfollowEvent, URITemplateAction, FlexSendMessage
 )
+import json
 
 import os
 
@@ -231,7 +233,7 @@ def handle_message(event):
 
 
     #メッセージ作成
-    container_obj = FlexSendMessage.new_from_json_dict(payload)
+    container_obj = json.loads(payload)
 
 
     #メッセージを送信するフェーズ
