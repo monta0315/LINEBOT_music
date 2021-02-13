@@ -97,7 +97,7 @@ def handle_message(event):
 
     #メッセージ作成
     messages = TemplateSendMessage(
-        alt_text="Watch Videos !!", template=CarouselTemplate(columns=columns))
+        alt_text="template", template=CarouselTemplate(columns=columns))
 
 
     #メッセージを送信するフェーズ
