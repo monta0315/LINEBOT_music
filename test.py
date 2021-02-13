@@ -85,10 +85,11 @@ def handle_message(event):
             title=column["title"],
             text=column["description"],
             actions=[
-                URITemplateAction(
-                    label=column["actions"]["label"],
-                    uri=column["actions"]["videoURL"],
-                )
+                {
+                    "type": "message",
+                    "label": column["actions"]["label"],
+                    "text":column["actions"]["videoURL"]
+                }
             ]
         )
         for column in msg_list
