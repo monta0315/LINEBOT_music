@@ -14,7 +14,7 @@ from linebot.exceptions import LineBotApiError
 from linebot.models import (
     CarouselColumn, CarouselTemplate, FollowEvent,
     LocationMessage, MessageEvent, TemplateSendMessage,
-    TextMessage, TextSendMessage, UnfollowEvent, URITemplateAction
+    TextMessage, TextSendMessage, UnfollowEvent, URITemplateAction, FlexSendMessage
 )
 
 import os
@@ -68,31 +68,64 @@ def handle_message(event):
         type='video',
     ).execute()
 
-    columns = []
-    for i in range(len(search_response['items'])):
-        column = [
-            CarouselColumn(
-                thumbnail_image_url=search_response["items"][i]["snippet"]['thumbnails']["default"]["url"],
-                title=search_response["items"][i]["snippet"]["title"],
-                text=search_response["items"][i]["snippet"]['description'],
-                actions=[
-                    {
-                        "type": "message",
-                        "label": "動画を視聴する",
-                        "text": "https://youtu.be/"+search_response["items"][i]["id"]["videoId"]
+    #flex_boxに変換
+    msg={
+        "type": "bubble",
+        "hero": {
+            "type": "image",
+            "url": search_response["items"][0]["snippet"]['thumbnails']["default"]["url"],
+            "size": "full",
+            "aspectRatio": "20:13",
+            "aspectMode": "cover",
+            "action": {
+                "type": "uri",
+                "uri": "https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
+            }
+        },
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "Brown Cafe",
+                    "weight": "bold",
+                    "size": "xl"
+                }
+            ]
+        },
+        "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+                {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                        "type": "uri",
+                        "label": "YouTube_Link",
+                        "uri": "https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
                     }
-                ]
-            )
-        ]
-        columns.append(column)
+                },
+                {
+                    "type": "spacer",
+                    "size": "sm"
+                }
+            ],
+            "flex": 0
+        }
+    }
+
+
 
     #メッセージ作成
-    messages = TemplateSendMessage(
-        alt_text="template", template=CarouselTemplate(columns=columns))
+    container_obj = FlexSendMessage.new_from_json_dict(msg)
 
 
     #メッセージを送信するフェーズ
-    line_bot_api.reply_message(event.reply_token, messages=messages)
+    line_bot_api.reply_message(event.reply_token, messages=container_obj)
 
 
 if __name__ == "__main__":
