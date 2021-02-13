@@ -55,8 +55,6 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    #メッセージ作成する際に使用するカラム
-    msg_list = []
 
     #送信されたテキスト
     push_text = event.message.text
@@ -68,18 +66,23 @@ def handle_message(event):
         type='video',
     ).execute()
 
+    img_url = search_response["items"][0]["snippet"]['thumbnails']["default"]["url"]
+
+    video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
+
+
     #flex_boxに変換
     msg={
         "type": "bubble",
         "hero": {
             "type": "image",
-            "url": search_response["items"][0]["snippet"]['thumbnails']["default"]["url"],
+            "url": img_url,
             "size": "full",
             "aspectRatio": "20:13",
             "aspectMode": "cover",
             "action": {
                 "type": "uri",
-                "uri": "https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
+                "uri": video_url
             }
         },
         "body": {
@@ -88,7 +91,7 @@ def handle_message(event):
             "contents": [
                 {
                     "type": "text",
-                    "text": "Brown Cafe",
+                    "text": "text",
                     "weight": "bold",
                     "size": "xl"
                 }
@@ -106,7 +109,7 @@ def handle_message(event):
                     "action": {
                         "type": "uri",
                         "label": "YouTube_Link",
-                        "uri": "https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
+                        "uri": video_url
                     }
                 },
                 {
