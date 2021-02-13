@@ -1,9 +1,6 @@
 from apiclient.discovery import build
-from linebot.models import (
-    CarouselColumn, CarouselTemplate, FollowEvent,
-    LocationMessage, MessageEvent, TemplateSendMessage,
-    TextMessage, TextSendMessage, UnfollowEvent, URITemplateAction
-)
+import json
+from linebot.models import TextSendMessage, FlexSendMessage
 
 YOUTUBE_API_KEY = "AIzaSyDWbuxE3tzF4RMnCjC045fPy5Cp9GYRHXM"
 
@@ -20,14 +17,60 @@ def hello_world():
         order="relevance",
         type='video',
     ).execute()
-    img_url = search_response["items"][0]["snippet"]['thumbnails']["default"]["url"]
+    msg = {
+        "type": "bubble",
+        "hero": {
+            "type": "image",
+            "url": search_response["items"][0]["snippet"]['thumbnails']["default"]["url"],
+            "size": "full",
+            "aspectRatio": "20:13",
+            "aspectMode": "cover",
+            "action": {
+                "type": "uri",
+                "uri": "https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
+            }
+        },
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": "Brown Cafe",
+                    "weight": "bold",
+                    "size": "xl"
+                }
+            ]
+        },
+        "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+                {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                        "type": "uri",
+                        "label": "YouTube_Link",
+                        "uri": "https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
+                    }
+                },
+                {
+                    "type": "spacer",
+                    "size": "sm"
+                }
+            ],
+            "flex": 0
+        }
+    }
 
-    video_url = "https://youtu.be/" + \
-        search_response["items"][0]["id"]["videoId"]
+    #msg=json.dumps(msg)
 
+    container_obj = FlexSendMessage.new_from_json_dict(msg)
+    print(container_obj)
 
-    print(img_url)
-    print(video_url)
 
 if __name__ == "__main__":
     hello_world()
