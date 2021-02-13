@@ -122,9 +122,10 @@ def handle_message(event):
             "flex": 0
         }
     }
-    container_obj = FlexSendMessage.new_from_json_dict(msg)
-
-
+    container_obj = FlexSendMessage(
+        alt_text='hello',
+        contents=msg
+        )
 
 
     #メッセージを送信するフェーズ
