@@ -74,7 +74,7 @@ def handle_message(event):
 
 
     #flex_boxに変換
-    payload = {
+    payload = """{
         "type": "flex",
         "altText": "Flex Message",
         "contents": {
@@ -228,7 +228,7 @@ def handle_message(event):
                 ]
             }
         }
-    }
+    }"""
 
 
 
