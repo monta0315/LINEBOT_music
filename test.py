@@ -81,7 +81,7 @@ def handle_message(event):
 
     columns = [
         CarouselColumn(
-            thumbnail_image_url=column["imgae"],
+            thumbnail_image_url=column["image"],
             title=column["title"],
             text=column["description"],
             actions=[
