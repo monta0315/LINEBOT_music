@@ -20,7 +20,7 @@ def hello_world():
         order="relevance",
         type='video',
     ).execute()
-    for i in range(len(search_response['items'])):
+    """ for i in range(len(search_response['items'])):
         result_dict = {
             "image": search_response["items"][i]["snippet"]['thumbnails']["default"]["url"],
             "title": search_response["items"][i]["snippet"]["title"],
@@ -30,23 +30,26 @@ def hello_world():
                 "videoURL": "https://youtu.be/"+search_response["items"][i]["id"]["videoId"],
             }
         }
-        msg_list.append(result_dict)
+        msg_list.append(result_dict) """
 
-    columns = [
-        CarouselColumn(
-            thumbnail_image_url=column["image"],
-            title=column["title"],
-            text=column["description"],
-            actions=[
-                {
+    columns = []
+    for i in range(len(search_response['items'])):
+        column = [
+            CarouselColumn(
+                thumbnail_image_url=search_response["items"][i]["snippet"]['thumbnails']["default"]["url"],
+                title=search_response["items"][i]["snippet"]["title"],
+                text=search_response["items"][i]["snippet"]['description'],
+                actions=[
+                    {
                     "type": "message",
-                    "label": column["actions"]["label"],
-                    "text":column["actions"]["videoURL"]
-                }
-            ]
-        )
-        for column in msg_list
-    ]
+                    "label": "動画を視聴する",
+                    "text": "https://youtu.be/"+search_response["items"][i]["id"]["videoId"]
+                    }
+                ]
+            )
+        ]
+        columns.append(column)
+
     print(columns)
 
 if __name__ == "__main__":
