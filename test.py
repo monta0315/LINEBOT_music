@@ -62,7 +62,7 @@ def handle_message(event):
     push_text = event.message.text
 
     #youtubeAPIから欲しい動画の情報をゲトる
-    search_response=youtube(push_text)
+    search_response=youtubeAPI(push_text)
 
 
     #pushメッセージに必要な要素を切り出してくる
@@ -85,7 +85,7 @@ def handle_message(event):
     line_bot_api.reply_message(event.reply_token,flex_message)
 
 
-def youtube(push_text):
+def youtubeAPI(push_text):
     search_response = youtube.search().list(
         part='snippet',
         q=push_text,
