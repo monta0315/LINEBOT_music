@@ -91,7 +91,7 @@ def youtube(push_text):
     ).execute()
     return search_response
 
-def msg_create(title, img_url, video_url):
+def msg_create():
     msg = {
         "type": "bubble",
         "hero": {
