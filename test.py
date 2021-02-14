@@ -61,24 +61,60 @@ def handle_message(event):
     #送信されたテキスト
     push_text = event.message.text
 
+    #youtubeAPIから欲しい動画の情報をゲトる
+    #search_response=youtube(push_text)
+
+
+    """ #pushメッセージに必要な要素を切り出してくる
+    title=search_response["items"][0]["snippet"]["title"]
+
+    img_url = search_response["items"][0]["snippet"]['thumbnails']["default"]["url"]
+
+    video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"] """
+
+
+    #flex_boxに変換
+    #msg = msg_create(title, img_url, video_url)
+
+    flex_message = FlexSendMessage(
+        alt_text='hello',
+        contents={
+            'type': 'bubble',
+            'direction': 'ltr',
+            'hero': {
+                'type': 'image',
+                'url': 'https://example.com/cafe.jpg',
+                'size': 'full',
+                'aspectRatio': '20:13',
+                'aspectMode': 'cover',
+                'action': {'type': 'uri', 'uri': 'http://example.com', 'label': 'label'}
+            }
+        }
+    )
+
+
+    #メッセージを送信するフェーズ
+    line_bot_api.reply_message(
+        event.reply_token,
+        flex_message
+        )
+
+
+def youtube(push_text):
     search_response = youtube.search().list(
         part='snippet',
         q=push_text,
         order="relevance",
         type='video',
     ).execute()
+    return search_response
 
-    img_url = search_response["items"][0]["snippet"]['thumbnails']["default"]["url"]
-
-    video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
-
-
-    #flex_boxに変換
+def msg_create(title, img_url, video_url):
     msg = {
         "type": "bubble",
         "hero": {
             "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_3_movie.png",
+            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
             "size": "full",
             "aspectRatio": "20:13",
             "aspectMode": "cover",
@@ -90,14 +126,11 @@ def handle_message(event):
         "body": {
             "type": "box",
             "layout": "vertical",
-            "spacing": "md",
             "contents": [
                 {
                     "type": "text",
-                    "text": "BROWN'S ADVENTURE\nIN MOVIE",
-                    "wrap": True,
+                    "text": "Brown Cafe",
                     "weight": "bold",
-                    "gravity": "center",
                     "size": "xl"
                 },
                 {
@@ -153,28 +186,6 @@ def handle_message(event):
                             "contents": [
                                 {
                                     "type": "text",
-                                    "text": "Date",
-                                    "color": "#aaaaaa",
-                                    "size": "sm",
-                                    "flex": 1
-                                },
-                                {
-                                    "type": "text",
-                                    "text": "Monday 25, 9:00PM",
-                                    "wrap": True,
-                                    "size": "sm",
-                                    "color": "#666666",
-                                    "flex": 4
-                                }
-                            ]
-                        },
-                        {
-                            "type": "box",
-                            "layout": "baseline",
-                            "spacing": "sm",
-                            "contents": [
-                                {
-                                    "type": "text",
                                     "text": "Place",
                                     "color": "#aaaaaa",
                                     "size": "sm",
@@ -182,11 +193,11 @@ def handle_message(event):
                                 },
                                 {
                                     "type": "text",
-                                    "text": "7 Floor, No.3",
+                                    "text": "Miraina Tower, 4-1-6 Shinjuku, Tokyo",
                                     "wrap": True,
                                     "color": "#666666",
                                     "size": "sm",
-                                    "flex": 4
+                                    "flex": 5
                                 }
                             ]
                         },
@@ -197,61 +208,59 @@ def handle_message(event):
                             "contents": [
                                 {
                                     "type": "text",
-                                    "text": "Seats",
+                                    "text": "Time",
                                     "color": "#aaaaaa",
                                     "size": "sm",
                                     "flex": 1
                                 },
                                 {
                                     "type": "text",
-                                    "text": "C Row, 18 Seat",
+                                    "text": "10:00 - 23:00",
                                     "wrap": True,
                                     "color": "#666666",
                                     "size": "sm",
-                                    "flex": 4
+                                    "flex": 5
                                 }
                             ]
                         }
                     ]
-                },
-                {
-                    "type": "box",
-                    "layout": "vertical",
-                    "margin": "xxl",
-                    "contents": [
-                        {
-                            "type": "spacer"
-                        },
-                        {
-                            "type": "image",
-                            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/linecorp_code_withborder.png",
-                            "aspectMode": "cover",
-                            "size": "xl"
-                        },
-                        {
-                            "type": "text",
-                            "text": "You can enter the theater by using this code instead of a ticket",
-                            "color": "#aaaaaa",
-                            "wrap": True,
-                            "margin": "xxl",
-                            "size": "xs"
-                        }
-                    ]
                 }
             ]
+        },
+        "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+                {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                        "type": "uri",
+                        "label": "CALL",
+                        "uri": "https://linecorp.com"
+                    }
+                },
+                {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                        "type": "uri",
+                        "label": "WEBSITE",
+                        "uri": "https://linecorp.com"
+                    }
+                },
+                {
+                    "type": "spacer",
+                    "size": "sm"
+                }
+            ],
+            "flex": 0
         }
     }
-
-
-    #メッセージを送信するフェーズ
-    line_bot_api.reply_message(
-        event.reply_token,
-        FlexSendMessage(
-            alt_text='hello',
-            contents=msg
-            )
-        )
-
+    return msg
 
 if __name__ == "__main__":
     #    app.run()
