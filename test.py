@@ -74,7 +74,10 @@ def handle_message(event):
 
 
     #flex_boxに変換
-    msg = msg_create()
+    msg = FlexSendMessage(
+        alt_text="hello",
+        contents=msg_create())
+
 
 
 
