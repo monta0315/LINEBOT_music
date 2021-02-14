@@ -75,7 +75,7 @@ def handle_message(event):
 
     #flex_boxに変換
     flex_message = FlexSendMessage(
-        alt_text="hello",
+        alt_text=title,
         contents=msg_create(title,img_url,video_url))
 
 
@@ -114,9 +114,31 @@ def msg_create(title,img_url,video_url):
                     "type": "text",
                     "text": title,
                     "weight": "bold",
-                    "size": "xl"
+                    "size": "l"
                 },
             ]
+        },
+        "footer": {
+            "type": "box",
+            "layout": "vertical",
+            "spacing": "sm",
+            "contents": [
+                {
+                    "type": "button",
+                    "style": "link",
+                    "height": "sm",
+                    "action": {
+                        "type": "uri",
+                        "label": "YouTube_Link",
+                        "uri": video_url
+                    }
+                },
+                {
+                    "type": "spacer",
+                    "size": "sm"
+                }
+            ],
+            "flex": 0
         }
     }
     return contents
