@@ -74,30 +74,12 @@ def handle_message(event):
 
 
     #flex_boxに変換
-    #msg = msg_create(title, img_url, video_url)
+    msg = msg_create()
 
-    flex_message = FlexSendMessage(
-        alt_text='hello',
-        contents={
-            'type': 'bubble',
-            'direction': 'ltr',
-            'hero': {
-                'type': 'image',
-                'url': 'https://example.com/cafe.jpg',
-                'size': 'full',
-                'aspectRatio': '20:13',
-                'aspectMode': 'cover',
-                'action': {'type': 'uri', 'uri': 'http://example.com', 'label': 'label'}
-            }
-        }
-    )
 
 
     #メッセージを送信するフェーズ
-    line_bot_api.reply_message(
-        event.reply_token,
-        flex_message
-        )
+    line_bot_api.reply_message(event.reply_token,msg)
 
 
 def youtube(push_text):
