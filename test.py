@@ -62,21 +62,21 @@ def handle_message(event):
     push_text = event.message.text
 
     #youtubeAPIから欲しい動画の情報をゲトる
-    #search_response=youtube(push_text)
+    search_response=youtube(push_text)
 
 
-    """ #pushメッセージに必要な要素を切り出してくる
+    #pushメッセージに必要な要素を切り出してくる
     title=search_response["items"][0]["snippet"]["title"]
 
     img_url = search_response["items"][0]["snippet"]['thumbnails']["default"]["url"]
 
-    video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"] """
+    video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
 
 
     #flex_boxに変換
     flex_message = FlexSendMessage(
         alt_text="hello",
-        contents=msg_create())
+        contents=msg_create(title,img_url,video_url))
 
 
 
@@ -94,17 +94,29 @@ def youtube(push_text):
     ).execute()
     return search_response
 
-def msg_create():
+def msg_create(title,img_url,video_url):
     contents = {
         'type': 'bubble',
         'direction': 'ltr',
         'hero': {
             'type': 'image',
-            'url': 'https://i.ytimg.com/vi/MwxgUVrj5m4/default.jpg',
+            'url': img_url,
             'size': 'full',
             'aspectRatio': '20:13',
             'aspectMode': 'cover',
-            'action': {'type': 'uri', 'uri': 'https://youtu.be/MwxgUVrj5m4', 'label': 'label'}
+            'action': {'type': 'uri', 'uri': video_url, 'label': 'label'}
+        },
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": title,
+                    "weight": "bold",
+                    "size": "xl"
+                },
+            ]
         }
     }
     return contents
