@@ -114,7 +114,7 @@ def msg_create(title,img_url,video_url):
                     "type": "text",
                     "text": title,
                     "weight": "bold",
-                    "size": "l"
+                    "size": "sm"
                 },
             ]
         },
