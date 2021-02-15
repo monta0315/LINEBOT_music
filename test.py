@@ -129,8 +129,8 @@ def msg_create(title,img_url,video_url):
                     "height": "sm",
                     "action": {
                         "type": "uri",
-                        "label": "YouTube_Link",
-                        "uri": "https://linecorp.com",
+                        "label": "YouTubeLink",
+                        "uri": video_url,
                     }
                 },
                 {

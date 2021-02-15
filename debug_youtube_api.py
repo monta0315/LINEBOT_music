@@ -17,18 +17,24 @@ def hello_world():
         order="relevance",
         type='video',
     ).execute()
-    msg = {
-        "type": "bubble",
-        "hero": {
-            "type": "image",
-            "url": search_response["items"][0]["snippet"]['thumbnails']["default"]["url"],
-            "size": "full",
-            "aspectRatio": "20:13",
-            "aspectMode": "cover",
-            "action": {
-                "type": "uri",
-                "uri": "https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
-            }
+
+    title = search_response["items"][0]["snippet"]["title"]
+
+    img_url = search_response["items"][0]["snippet"]['thumbnails']["default"]["url"]
+
+    video_url = "https://youtu.be/" + \
+        search_response["items"][0]["id"]["videoId"]
+
+    contents = {
+        'type': 'bubble',
+        'direction': 'ltr',
+        'hero': {
+            'type': 'image',
+            'url': img_url,
+            'size': 'full',
+            'aspectRatio': '20:13',
+            'aspectMode': 'cover',
+            'action': {'type': 'uri', 'uri': video_url, 'label': 'label'}
         },
         "body": {
             "type": "box",
@@ -36,10 +42,10 @@ def hello_world():
             "contents": [
                 {
                     "type": "text",
-                    "text": "Brown Cafe",
+                    "text": title,
                     "weight": "bold",
-                    "size": "xl"
-                }
+                    "size": "lg"
+                },
             ]
         },
         "footer": {
@@ -54,7 +60,7 @@ def hello_world():
                     "action": {
                         "type": "uri",
                         "label": "YouTube_Link",
-                        "uri": "https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
+                        "uri": video_url,
                     }
                 },
                 {
@@ -66,11 +72,13 @@ def hello_world():
         }
     }
 
-    #msg=json.dumps(msg)
+    print(contents)
+
+"""    #msg=json.dumps(msg)
 
     container_obj = FlexSendMessage.new_from_json_dict(msg)
     print(container_obj)
-
+ """
 
 if __name__ == "__main__":
     hello_world()

@@ -123,3 +123,14 @@ msg={
             "flex": 0
         }
     }
+
+
+    {'type': 'bubble',
+    'direction': 'ltr',
+    'hero': {'type': 'image',
+            'url': 'https://i.ytimg.com/vi/MwxgUVrj5m4/default.jpg',
+            'size': 'full',
+            'aspectRatio': '20:13',
+            'aspectMode': 'cover',
+             'action': {'type': 'uri', 'uri': 'https://youtu.be/MwxgUVrj5m4', 'label': 'label'}},
+             'body': {'type': 'box', 'layout': 'vertical', 'contents': [{'type': 'text', 'text': 'PSYQUI - ヒステリックナイトガール feat. Such (android52 Edit)', 'weight': 'bold', 'size': 'lg'}]}, 'footer': {'type': 'box', 'layout': 'vertical', 'spacing': 'sm', 'contents': [{'type': 'button', 'style': 'link', 'height': 'sm', 'action': {'type': 'uri', 'label': 'YouTubeLink', 'uri': 'https://youtu.be/MwxgUVrj5m4'}}, {'type': 'spacer', 'size': 'sm'}], 'flex': 0}}
