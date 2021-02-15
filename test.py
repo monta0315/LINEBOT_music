@@ -61,6 +61,9 @@ def handle_message(event):
     #送信されたテキスト
     push_text = event.message.text
 
+    #pushユーザー
+    userId = event.source.userId
+
     #youtubeAPIから欲しい動画の情報をゲトる
     search_response=youtubeAPI(push_text)
 
@@ -76,7 +79,7 @@ def handle_message(event):
     #flex_boxに変換
     flex_message = FlexSendMessage(
         alt_text=title,
-        contents=msg_create(title,img_url,video_url))
+        contents=msg_create(title,img_url,video_url,userId))
 
 
 
@@ -94,7 +97,7 @@ def youtubeAPI(push_text):
     ).execute()
     return search_response
 
-def msg_create(title,img_url,video_url):
+def msg_create(title,img_url,video_url,userId):
     contents = {
         "type": "bubble",
         "direction": "ltr",
@@ -114,7 +117,7 @@ def msg_create(title,img_url,video_url):
                         },
                         {
                             "type": "text",
-                            "text": "Akihabara",
+                            "text": "AtNoM",
                             "color": "#ffffff",
                             "size": "xl",
                             "flex": 4,
@@ -134,7 +137,7 @@ def msg_create(title,img_url,video_url):
                         },
                         {
                             "type": "text",
-                            "text": "Shinjuku",
+                            "text": userId,
                             "color": "#ffffff",
                             "size": "xl",
                             "flex": 4,
@@ -165,7 +168,7 @@ def msg_create(title,img_url,video_url):
                     "type": "text",
                     "text": title,
                     "weight": "bold",
-                    "size": "lg"
+                    "size": "md"
                 },
             ]
         }
