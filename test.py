@@ -151,7 +151,7 @@ def msg_create(title,img_url,video_url,profile_name):
             "paddingAll": "20px",
             "backgroundColor": "#0367D3",
             "spacing": "md",
-            "height": "154px",
+            "height": "140px",
             "paddingTop": "22px"
         },
         "hero": {
@@ -170,7 +170,7 @@ def msg_create(title,img_url,video_url,profile_name):
                     "type": "text",
                     "text": title,
                     "weight": "bold",
-                    "size": "md"
+                    "size": "sm"
                 },
             ]
         }
