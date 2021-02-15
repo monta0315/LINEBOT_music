@@ -58,11 +58,13 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
+    print(event)
+
     #送信されたテキスト
     push_text = event.message.text
 
     #pushユーザー
-    userId = event.source.userId
+    profile_name = line_bot_api.get_profile(event.source.user_id).display_name
 
     #youtubeAPIから欲しい動画の情報をゲトる
     search_response=youtubeAPI(push_text)
@@ -79,7 +81,7 @@ def handle_message(event):
     #flex_boxに変換
     flex_message = FlexSendMessage(
         alt_text=title,
-        contents=msg_create(title,img_url,video_url,userId))
+        contents=msg_create(title,img_url,video_url,profile_name))
 
 
 
@@ -97,7 +99,7 @@ def youtubeAPI(push_text):
     ).execute()
     return search_response
 
-def msg_create(title,img_url,video_url,userId):
+def msg_create(title,img_url,video_url,profile_name):
     contents = {
         "type": "bubble",
         "direction": "ltr",
@@ -137,7 +139,7 @@ def msg_create(title,img_url,video_url,userId):
                         },
                         {
                             "type": "text",
-                            "text": userId,
+                            "text": profile_name,
                             "color": "#ffffff",
                             "size": "xl",
                             "flex": 4,
