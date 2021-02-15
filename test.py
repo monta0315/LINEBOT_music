@@ -23,6 +23,11 @@ import os
 
 from apiclient.discovery import build
 
+import sqlite3
+
+conn = sqlite3.connect("test.db")
+c = conn.cursor()
+
 app = Flask(__name__)
 
 #環境変数取得
@@ -78,18 +83,26 @@ def handle_message(event):
     video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
 
 
+
     #flex_boxに変換
     flex_message = FlexSendMessage(
         alt_text=title,
         contents=msg_create(title,img_url,video_url,profile_name))
 
-
-
-
     #メッセージを送信するフェーズ
-    line_bot_api.reply_message(event.reply_token,flex_message)
+    line_bot_api.reply_message(event.reply_token, flex_message)
 
+    #データベースに保存
+    pushes=(title,img_url,video_url,profile_name)
+    insert_table(pushes)
 
+#データベースに出力
+def insert_table(pushes):
+  query = "INSERT INTO test VALUES(?,?,?,?)"
+  c.execute(query, pushes)
+  conn.commit()
+
+#YouTubeAPIから引っ張ってくる
 def youtubeAPI(push_text):
     search_response = youtube.search().list(
         part="snippet",
