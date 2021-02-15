@@ -25,8 +25,6 @@ from apiclient.discovery import build
 
 import sqlite3
 
-conn = sqlite3.connect("test.db")
-c = conn.cursor()
 
 app = Flask(__name__)
 
@@ -81,6 +79,8 @@ def handle_message(event):
     video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
 
     #データベースに保存
+    conn = sqlite3.connect("test.db")
+    c = conn.cursor()
     pushes = ("aa", "bb", "cc", "dd")
     insert_table(pushes)
 
