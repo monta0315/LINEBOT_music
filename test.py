@@ -63,8 +63,6 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
 
-    print(event)
-
     #送信されたテキスト
     push_text = event.message.text
 
@@ -82,7 +80,9 @@ def handle_message(event):
 
     video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
 
-
+    #データベースに保存
+    pushes = ("aa", "bb", "cc", "dd")
+    insert_table(pushes)
 
     #flex_boxに変換
     flex_message = FlexSendMessage(
@@ -92,9 +92,6 @@ def handle_message(event):
     #メッセージを送信するフェーズ
     line_bot_api.reply_message(event.reply_token, flex_message)
 
-    #データベースに保存
-    pushes=(title,img_url,video_url,profile_name)
-    insert_table(pushes)
 
 #データベースに出力
 def insert_table(pushes):

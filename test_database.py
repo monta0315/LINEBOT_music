@@ -11,12 +11,12 @@ def check_table():
   c.execute("select *from test")
 
 def insert_table(pushes):
-  query = "INSERT INTO test VALUES(?,?)"
+  query = "INSERT INTO test VALUES(?,?,?,?)"
   c.execute(query,pushes)
   conn.commit()
 
 if __name__ == "__main__":
   #create_table()
-  pushes=("aa","bb")
+  pushes=("aa","bb","cc","dd")
   insert_table(pushes)
   #check_table()
