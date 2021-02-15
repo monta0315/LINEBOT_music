@@ -98,6 +98,57 @@ def msg_create(title,img_url,video_url):
     contents = {
         "type": "bubble",
         "direction": "ltr",
+        "header": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "FROM",
+                            "color": "#ffffff66",
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": "Akihabara",
+                            "color": "#ffffff",
+                            "size": "xl",
+                            "flex": 4,
+                            "weight": "bold"
+                        }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "TO",
+                            "color": "#ffffff66",
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": "Shinjuku",
+                            "color": "#ffffff",
+                            "size": "xl",
+                            "flex": 4,
+                            "weight": "bold"
+                        }
+                    ]
+                }
+            ],
+            "paddingAll": "20px",
+            "backgroundColor": "#0367D3",
+            "spacing": "md",
+            "height": "154px",
+            "paddingTop": "22px"
+        },
         "hero": {
             "type": "image",
             "url": img_url,
@@ -117,24 +168,6 @@ def msg_create(title,img_url,video_url):
                     "size": "lg"
                 },
             ]
-        },
-        "footer": {
-            "type": "box",
-            "layout": "vertical",
-            "spacing": "sm",
-            "contents": [{
-                "type": "button",
-                "style": "link",
-                "height": "sm",
-                "action": {
-                    "type": "uri",
-                    "label": "YouTube_Link",
-                    "uri": video_url,
-                    }
-            },{"type": "spacer",
-                "size": "sm"}
-            ],
-        "flex": 0,
         }
     }
     return contents
