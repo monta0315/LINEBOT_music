@@ -80,7 +80,13 @@ def handle_message(event):
 
     #データベースに保存
     pushes = ("aa", "bb", "cc", "dd")
-    insert_table(pushes)
+    query = "INSERT INTO test VALUES(?,?,?,?)"
+    conn = sqlite3.connect("test.db")
+    c = conn.cursor()
+    c.execute(query, pushes)
+    c.close()
+    conn.commit()
+    conn.close()
 
     #flex_boxに変換
     flex_message = FlexSendMessage(
@@ -90,16 +96,9 @@ def handle_message(event):
     #メッセージを送信するフェーズ
     line_bot_api.reply_message(event.reply_token, flex_message)
 
-
+"""
 #データベースに出力
-def insert_table(pushes):
-  query = "INSERT INTO test VALUES(?,?,?,?)"
-  conn = sqlite3.connect("test.db")
-  c = conn.cursor()
-  c.execute(query, pushes)
-  c.close()
-  conn.commit()
-  conn.close()
+def insert_table(pushes): """
 
 #YouTubeAPIから引っ張ってくる
 def youtubeAPI(push_text):
