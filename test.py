@@ -34,13 +34,13 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 YOUTUBE_API_KEY = "AIzaSyDWbuxE3tzF4RMnCjC045fPy5Cp9GYRHXM"
 
-youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
+youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
 
-@app.route("/callback", methods=['POST'])
+@app.route("/callback", methods=["POST"])
 def callback():
     # get X-Line-Signature header value
-    signature = request.headers['X-Line-Signature']
+    signature = request.headers["X-Line-Signature"]
 
     # get request body as text
     body = request.get_data(as_text=True)
@@ -52,7 +52,7 @@ def callback():
     except InvalidSignatureError:
         abort(400)
 
-    return 'OK'
+    return "OK"
 
 
 @handler.add(MessageEvent, message=TextMessage)
@@ -68,7 +68,7 @@ def handle_message(event):
     #pushメッセージに必要な要素を切り出してくる
     title=search_response["items"][0]["snippet"]["title"]
 
-    img_url = search_response["items"][0]["snippet"]['thumbnails']["default"]["url"]
+    img_url = search_response["items"][0]["snippet"]["thumbnails"]["default"]["url"]
 
     video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
 
@@ -87,24 +87,24 @@ def handle_message(event):
 
 def youtubeAPI(push_text):
     search_response = youtube.search().list(
-        part='snippet',
+        part="snippet",
         q=push_text,
         order="relevance",
-        type='video',
+        type="video",
     ).execute()
     return search_response
 
 def msg_create(title,img_url,video_url):
     contents = {
-        'type': 'bubble',
-        'direction': 'ltr',
-        'hero': {
-            'type': 'image',
-            'url': img_url,
-            'size': 'full',
-            'aspectRatio': '20:13',
-            'aspectMode': 'cover',
-            'action': {'type': 'uri', 'uri': video_url, 'label': 'label'}
+        "type": "bubble",
+        "direction": "ltr",
+        "hero": {
+            "type": "image",
+            "url": img_url,
+            "size": "full",
+            "aspectRatio": "20:13",
+            "aspectMode": "cover",
+            "action": {"type": "uri", "uri": video_url, "label": "label"}
         },
         "body": {
             "type": "box",
@@ -122,23 +122,19 @@ def msg_create(title,img_url,video_url):
             "type": "box",
             "layout": "vertical",
             "spacing": "sm",
-            "contents": [
-                {
-                    "type": "button",
-                    "style": "link",
-                    "height": "sm",
-                    "action": {
-                        "type": "uri",
-                        "label": "YouTubeLink",
-                        "uri": video_url,
+            "contents": [{
+                "type": "button",
+                "style": "link",
+                "height": "sm",
+                "action": {
+                    "type": "uri",
+                    "label": "YouTube_Link",
+                    "uri": video_url,
                     }
-                },
-                {
-                    "type": "spacer",
-                    "size": "sm"
-                }
+            },{"type": "spacer",
+                "size": "sm"}
             ],
-            "flex": 0
+        "flex": 0,
         }
     }
     return contents
