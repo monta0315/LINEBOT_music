@@ -79,8 +79,6 @@ def handle_message(event):
     video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
 
     #データベースに保存
-    conn = sqlite3.connect("test.db")
-    c = conn.cursor()
     pushes = ("aa", "bb", "cc", "dd")
     insert_table(pushes)
 
@@ -96,6 +94,8 @@ def handle_message(event):
 #データベースに出力
 def insert_table(pushes):
   query = "INSERT INTO test VALUES(?,?,?,?)"
+  conn = sqlite3.connect("test.db")
+  c = conn.cursor()
   c.execute(query, pushes)
   conn.commit()
 
