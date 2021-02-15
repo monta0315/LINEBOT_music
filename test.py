@@ -97,7 +97,9 @@ def insert_table(pushes):
   conn = sqlite3.connect("test.db")
   c = conn.cursor()
   c.execute(query, pushes)
+  c.close()
   conn.commit()
+  conn.close()
 
 #YouTubeAPIから引っ張ってくる
 def youtubeAPI(push_text):
