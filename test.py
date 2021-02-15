@@ -114,7 +114,7 @@ def msg_create(title,img_url,video_url):
                     "type": "text",
                     "text": title,
                     "weight": "bold",
-                    "size": "sm"
+                    "size": "lg"
                 },
             ]
         },
@@ -130,7 +130,7 @@ def msg_create(title,img_url,video_url):
                     "action": {
                         "type": "uri",
                         "label": "YouTube_Link",
-                        "uri": video_url
+                        "uri": "https://linecorp.com",
                     }
                 },
                 {
