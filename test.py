@@ -23,7 +23,7 @@ import os
 
 from apiclient.discovery import build
 
-import sqlite3
+import psycopg2
 
 
 app = Flask(__name__)
@@ -93,13 +93,13 @@ def handle_message(event):
 
 #データベースに出力
 def insert_table(pushes):
-    query = "INSERT INTO test VALUES(?,?,?,?)"
-    conn = sqlite3.connect("test.db")
-    c = conn.cursor()
-    c.execute(query, pushes)
-    c.close()
-    conn.commit()
-    conn.close()
+    query = "INSERT INTO store(title,image_url,video_url,name) VALUES(%s,%s,%s,%s)"
+    con = psycopg2.connect("host=localhost port=5432 dbname=store")
+    cur = con.cursor()
+    cur.execute(query, pushes)
+    cur.close()
+    con.commit()
+    con.close()
 
 #YouTubeAPIから引っ張ってくる
 def youtubeAPI(push_text):
