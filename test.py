@@ -31,11 +31,12 @@ app = Flask(__name__)
 #環境変数取得
 YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
+YOUTUBE_API_KEY = os.environ["YOUTUBE_API_KEY"]
+DSN=os.environ["DATABASE_URL"]
 
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-YOUTUBE_API_KEY = "AIzaSyDWbuxE3tzF4RMnCjC045fPy5Cp9GYRHXM"
 
 youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
@@ -94,8 +95,7 @@ def handle_message(event):
 #データベースに出力
 def insert_table(pushes):
     query = "INSERT INTO store(title,image_url,video_url,name) VALUES(%s,%s,%s,%s)"
-    con = psycopg2.connect(
-        "host=ec2-34-192-58-41.compute-1.amazonaws.com port=5432 dbname=d5icv4ckp5dscr")
+    con = psycopg2.connect(DSN)
     cur = con.cursor()
     cur.execute(query, pushes)
     cur.close()

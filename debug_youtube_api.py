@@ -1,6 +1,7 @@
 from apiclient.discovery import build
 import json
 from linebot.models import TextSendMessage, FlexSendMessage
+import os
 
 YOUTUBE_API_KEY = "AIzaSyDWbuxE3tzF4RMnCjC045fPy5Cp9GYRHXM"
 
@@ -8,6 +9,8 @@ youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
 
 #必要なもの
 #動画の画像，動画のタイトル，動画の概要欄の文言，
+
+print(os.environ)
 
 def hello_world():
     msg_list=[]
