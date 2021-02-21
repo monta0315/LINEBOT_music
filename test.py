@@ -80,7 +80,7 @@ def handle_message(event):
 
     #データベースに保存
     pushes = (title, img_url, video_url, profile_name)
-    insert_table(pushes)
+    #insert_table(pushes)
 
     #flex_boxに変換
     flex_message = FlexSendMessage(
