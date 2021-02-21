@@ -126,8 +126,8 @@ def push_videos(event):
     #メッセージを加工して送信するフェーズ
     #flex_boxに変換
     flex_message = FlexSendMessage(
-        alt_text=result[0],
-        contents=msg_create(result[1], result[2], result[3], result[4]))
+        alt_text=result[1],
+        contents=msg_created(result[1], result[2], result[3], result[4]))
 
     #メッセージを送信するフェーズ
     line_bot_api.reply_message(event.reply_token, flex_message)
@@ -193,6 +193,85 @@ def msg_create(title,img_url,video_url,profile_name):
                         {
                             "type": "text",
                             "text": profile_name,
+                            "color": "#ffffff",
+                            "size": "xl",
+                            "flex": 4,
+                            "weight": "bold"
+                        }
+                    ]
+                }
+            ],
+            "paddingAll": "20px",
+            "backgroundColor": "#0367D3",
+            "spacing": "md",
+            "height": "140px",
+            "paddingTop": "22px"
+        },
+        "hero": {
+            "type": "image",
+            "url": img_url,
+            "size": "full",
+            "aspectRatio": "20:13",
+            "aspectMode": "cover",
+            "action": {"type": "uri", "uri": video_url, "label": "label"}
+        },
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "text",
+                    "text": title,
+                    "weight": "bold",
+                    "size": "sm"
+                },
+            ]
+        }
+    }
+    return contents
+
+
+def msg_created(title, img_url, video_url, profile_name):
+    contents = {
+        "type": "bubble",
+        "direction": "ltr",
+        "header": {
+            "type": "box",
+            "layout": "vertical",
+            "contents": [
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "FROM",
+                            "color": "#ffffff66",
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": profile_name,
+                            "color": "#ffffff",
+                            "size": "xl",
+                            "flex": 4,
+                            "weight": "bold"
+                        }
+                    ]
+                },
+                {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                        {
+                            "type": "text",
+                            "text": "TO",
+                            "color": "#ffffff66",
+                            "size": "sm"
+                        },
+                        {
+                            "type": "text",
+                            "text": "You",
                             "color": "#ffffff",
                             "size": "xl",
                             "flex": 4,
