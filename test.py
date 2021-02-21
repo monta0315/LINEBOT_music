@@ -127,7 +127,7 @@ def push_videos(event):
     #flex_boxに変換
     flex_message = FlexSendMessage(
         alt_text=result[0],
-        contents=msg_create(result[0], result[1], result[2], result[3]))
+        contents=msg_create(result[1], result[2], result[3], result[4]))
 
     #メッセージを送信するフェーズ
     line_bot_api.reply_message(event.reply_token, flex_message)
