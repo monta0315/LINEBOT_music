@@ -94,7 +94,7 @@ def handle_message(event):
 
 #データベースに出力
 def insert_table(pushes):
-    query = "INSERT INTO store(title,image_url,video_url,name) VALUES(%s,%s,%s,%s)"
+    query = "INSERT INTO store(title,img_url,video_url,name) VALUES(%s,%s,%s,%s)"
     con = psycopg2.connect(DSN)
     cur = con.cursor()
     cur.execute(query, pushes)
