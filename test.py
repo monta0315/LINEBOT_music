@@ -42,8 +42,6 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
-con = psycopg2.connect(DSN)
-cur = con.cursor()
 
 
 @app.route("/callback", methods=["POST"])
@@ -70,7 +68,7 @@ def handle_message(event):
     #送信されたテキスト
     push_text = event.message.text
 
-    if push_text == "Recommended":
+    if push_text == "おすすめ":
         push_videos(event)
 
     else:
@@ -104,6 +102,8 @@ def handle_message(event):
 
 #データベースに出力
 def insert_table(pushes):
+    con = psycopg2.connect(DSN)
+    cur = con.cursor()
     query = "INSERT INTO store(title,img_url,video_url,name) VALUES(%s,%s,%s,%s)"
     cur.execute(query, pushes)
     cur.close()
@@ -111,6 +111,8 @@ def insert_table(pushes):
     con.close()
 
 def push_videos(event):
+    con = psycopg2.connect(DSN)
+    cur = con.cursor()
     #データ数取得
     cur.execute('SELECT COUNT(*) FROM store')
     total = cur.fetchone()
