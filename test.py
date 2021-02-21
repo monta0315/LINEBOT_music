@@ -94,7 +94,8 @@ def handle_message(event):
 #データベースに出力
 def insert_table(pushes):
     query = "INSERT INTO store(title,image_url,video_url,name) VALUES(%s,%s,%s,%s)"
-    con = psycopg2.connect("host=localhost port=5432 dbname=LineBot")
+    con = psycopg2.connect(
+        "host=ec2-34-192-58-41.compute-1.amazonaws.com port=5432 dbname=d5icv4ckp5dscr")
     cur = con.cursor()
     cur.execute(query, pushes)
     cur.close()
