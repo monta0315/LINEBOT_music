@@ -83,5 +83,28 @@ def hello_world():
     print(container_obj)
  """
 
+
+def create_rich_menu():
+    rich_menu_to_create = RichMenu(
+        size=RichMenuSize(width=1200, height=405),
+        selected=True,
+        name="richmenu for AtNoM",
+        chat_bar_text="TAP HERE",
+        areas=[
+            RichMenuArea(
+                bounds=RichMenuBounds(x=0, y=0, width=480, height=405),
+                action={
+                    "type": "message",
+                    "text": "Tell me recommendations!!"
+                }
+            ),
+            RichMenuArea(
+                bounds=RichMenuBounds(x=400, y=0, width=720, height=405),
+                action=(),
+            )
+        ]
+    )
+    richMunuId = line_bot_api.create_rich_menu(rich_menu=rich_menu_to_create)
+
 if __name__ == "__main__":
     hello_world()

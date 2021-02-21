@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
+    MessageEvent, TextMessage, TextSendMessage,RichMenu,RichMenuSize,RichMenuArea,RichMenuBounds
 )
 
 from linebot.exceptions import LineBotApiError
@@ -25,6 +25,8 @@ from apiclient.discovery import build
 
 import psycopg2
 
+import random
+
 
 app = Flask(__name__)
 
@@ -39,6 +41,9 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 
 youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
+
+con = psycopg2.connect(DSN)
+cur = con.cursor()
 
 
 @app.route("/callback", methods=["POST"])
@@ -65,42 +70,75 @@ def handle_message(event):
     #送信されたテキスト
     push_text = event.message.text
 
-    #pushユーザー
-    profile_name = line_bot_api.get_profile(event.source.user_id).display_name
+    if push_text == "Recommended":
+        push_videos(event)
 
-    #youtubeAPIから欲しい動画の情報をゲトる
-    search_response=youtubeAPI(push_text)
+    else:
+        #pushユーザー
+        profile_name = line_bot_api.get_profile(event.source.user_id).display_name
+
+        #youtubeAPIから欲しい動画の情報をゲトる
+        search_response=youtubeAPI(push_text)
 
 
-    #pushメッセージに必要な要素を切り出してくる
-    title=search_response["items"][0]["snippet"]["title"]
+        #pushメッセージに必要な要素を切り出してくる
+        title=search_response["items"][0]["snippet"]["title"]
 
-    img_url = search_response["items"][0]["snippet"]["thumbnails"]["high"]["url"]
+        img_url = search_response["items"][0]["snippet"]["thumbnails"]["high"]["url"]
 
-    video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
+        video_url="https://youtu.be/"+search_response["items"][0]["id"]["videoId"]
 
-    #データベースに保存
-    pushes = (title, img_url, video_url, profile_name)
-    insert_table(pushes)
+        #データベースに保存
+        pushes = (title, img_url, video_url, profile_name)
+        insert_table(pushes)
 
-    #flex_boxに変換
-    flex_message = FlexSendMessage(
-        alt_text=title,
-        contents=msg_create(title,img_url,video_url,profile_name))
+        #flex_boxに変換
+        flex_message = FlexSendMessage(
+            alt_text=title,
+            contents=msg_create(title,img_url,video_url,profile_name))
 
-    #メッセージを送信するフェーズ
-    line_bot_api.reply_message(event.reply_token, flex_message)
+        #メッセージを送信するフェーズ
+        line_bot_api.reply_message(event.reply_token, flex_message)
+
 
 
 #データベースに出力
 def insert_table(pushes):
     query = "INSERT INTO store(title,img_url,video_url,name) VALUES(%s,%s,%s,%s)"
-    con = psycopg2.connect(DSN)
-    cur = con.cursor()
     cur.execute(query, pushes)
     cur.close()
     con.commit()
     con.close()
+
+def push_videos(event):
+    #データ数取得
+    cur.execute('SELECT COUNT(*) FROM store')
+    total = cur.fetchone()
+
+    #ランダムデータをチョイス
+    random.seed
+    num = random.randrange(1, total[0] + 1)
+    cur.execute("SELECT * FROM store where id=%s", str(num))
+    result = cur.fetchone()
+
+    #メッセージを加工して送信するフェーズ
+    #flex_boxに変換
+    flex_message = FlexSendMessage(
+        alt_text=result[0],
+        contents=msg_create(result[0], result[1], result[2], result[3]))
+
+    #メッセージを送信するフェーズ
+    line_bot_api.reply_message(event.reply_token, flex_message)
+    cur.close()
+    con.close()
+
+
+def recommend_video():
+    con = psycopg2.connect(DSN)
+    cur = con.cursor()
+    #データベースに登録されているデータの件数を引っ張ってくる
+    num=cur.execute("SELECT COUNT(*) from store;")
+
 
 #YouTubeAPIから引っ張ってくる
 def youtubeAPI(push_text):
