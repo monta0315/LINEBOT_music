@@ -25,7 +25,6 @@ from apiclient.discovery import build
 
 import psycopg2
 
-import random
 
 
 app = Flask(__name__)
@@ -128,12 +127,6 @@ def push_videos(event):
     cur.close()
     con.close()
 
-
-def recommend_video():
-    con = psycopg2.connect(DSN)
-    cur = con.cursor()
-    #データベースに登録されているデータの件数を引っ張ってくる
-    num=cur.execute("SELECT COUNT(*) from store;")
 
 
 #YouTubeAPIから引っ張ってくる
