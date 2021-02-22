@@ -306,11 +306,11 @@ def createRichmenu():
             chat_bar_text='TAP HERE',
             areas=[
                 RichMenuArea(
-                    bounds=RichMenuBounds(x=0, y=0, width=480, height=405),
+                    bounds=RichMenuBounds(x=0, y=0, width=600, height=405),
                     action=MessageAction(text="PUSH YOU")
                 ),
                 RichMenuArea(
-                    bounds=RichMenuBounds(x=480, y=0, width=720, height=405),
+                    bounds=RichMenuBounds(x=480, y=0, width=600, height=405),
                     action=MessageAction(text="PULL ME")
                 )
             ]
@@ -319,7 +319,7 @@ def createRichmenu():
             rich_menu=rich_menu_to_create)
 
         # upload an image for rich menu
-        path = 'LINEBOT_music'
+        path = 'PUSH!!.png'
 
         with open(path, 'rb') as f:
             line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
@@ -335,6 +335,6 @@ def createRichmenu():
     return result
 
 if __name__ == "__main__":
-    app.run()
+    #app.run()
     port = int(os.getenv("PORT",5000))
     app.run(host="0.0.0.0", port=port)
