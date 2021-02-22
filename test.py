@@ -114,16 +114,10 @@ def push_videos(event):
     con = psycopg2.connect(DSN)
     cur = con.cursor()
     #データ数取得
-    cur.execute('SELECT COUNT(*) FROM store')
-    total = cur.fetchone()
+    cur.execute('SELECT * FROM store ORDER RANDOM() LIMIT 1')
 
-    #ランダムデータをチョイス
-    random.seed
-    num = random.randrange(1, total[0] + 1)
-    cur.execute("SELECT * FROM store where id=%s", str(num))
-    result = cur.fetchone()
+    result=cur.fetchone()
 
-    #メッセージを加工して送信するフェーズ
     #flex_boxに変換
     flex_message = FlexSendMessage(
         alt_text=result[1],
