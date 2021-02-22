@@ -7,7 +7,7 @@ from linebot.exceptions import (
     InvalidSignatureError
 )
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,RichMenu,RichMenuSize,RichMenuArea,RichMenuBounds
+    MessageEvent, TextMessage, TextSendMessage,RichMenu,RichMenuSize,RichMenuArea,RichMenuBounds,MessageAction
 )
 
 from linebot.exceptions import LineBotApiError
@@ -139,6 +139,7 @@ def youtubeAPI(push_text):
     ).execute()
     return search_response
 
+
 def msg_create(title,img_url,video_url,profile_name):
     contents = {
         "type": "bubble",
@@ -218,6 +219,7 @@ def msg_create(title,img_url,video_url,profile_name):
     return contents
 
 
+#おすすめをpushするときのリプライメッセージ
 def msg_created(title, img_url, video_url, profile_name):
     contents = {
         "type": "bubble",
@@ -295,6 +297,45 @@ def msg_created(title, img_url, video_url, profile_name):
         }
     }
     return contents
+
+def createRichmenu():
+    result = False
+    try:
+        # define a new richmenu
+        rich_menu_to_create = RichMenu(
+            size=RichMenuSize(width=1200, height=405),
+            selected=True,
+            name='richmenu for randomchat',
+            chat_bar_text='TAP HERE',
+            areas=[
+                RichMenuArea(
+                    bounds=RichMenuBounds(x=0, y=0, width=480, height=405),
+                    action=MessageAction(text="PUSH YOU")
+                ),
+                RichMenuArea(
+                    bounds=RichMenuBounds(x=480, y=0, width=720, height=405),
+                    action=MessageAction(text="PULL ME")
+                )
+            ]
+        )
+        richMenuId = line_bot_api.create_rich_menu(
+            rich_menu=rich_menu_to_create)
+
+        # upload an image for rich menu
+        path = 'LINEBOT_music'
+
+        with open(path, 'rb') as f:
+            line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
+
+        # set the default rich menu
+        line_bot_api.set_default_rich_menu(richMenuId)
+
+        result = True
+
+    except Exception:
+        result = False
+
+    return result
 
 if __name__ == "__main__":
     #    app.run()
