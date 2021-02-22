@@ -113,7 +113,7 @@ def push_videos(event):
     con = psycopg2.connect(DSN)
     cur = con.cursor()
     #データ数取得
-    cur.execute('SELECT * FROM store ORDER RANDOM() LIMIT 1')
+    cur.execute('SELECT * FROM store ORDER BY RANDOM() LIMIT 1')
 
     result=cur.fetchone()
 
