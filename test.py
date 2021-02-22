@@ -3,20 +3,14 @@ from flask import Flask, request, abort
 from linebot import (
     LineBotApi, WebhookHandler
 )
-from linebot.exceptions import (
-    InvalidSignatureError
-)
 from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,RichMenu,RichMenuSize,RichMenuArea,RichMenuBounds,MessageAction
+    MessageEvent, TextMessage, TextSendMessage, RichMenu, RichMenuSize, RichMenuArea, RichMenuBounds, MessageAction, FlexSendMessage
 )
 
-from linebot.exceptions import LineBotApiError
 
-from linebot.models import (
-    CarouselColumn, CarouselTemplate, FollowEvent,
-    LocationMessage, MessageEvent, TemplateSendMessage,
-    TextMessage, TextSendMessage, UnfollowEvent, URITemplateAction, FlexSendMessage
-)
+from linebot.exceptions import LineBotApiError, InvalidSignatureError
+
+
 import json
 
 import os
@@ -341,6 +335,6 @@ def createRichmenu():
     return result
 
 if __name__ == "__main__":
-    #    app.run()
+    app.run()
     port = int(os.getenv("PORT",5000))
     app.run(host="0.0.0.0", port=port)
