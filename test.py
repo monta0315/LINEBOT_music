@@ -41,7 +41,6 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
-createRichmenu()
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -339,5 +338,6 @@ def createRichmenu():
 
 if __name__ == "__main__":
     #    app.run()
+    createRichmenu()
     port = int(os.getenv("PORT",5000))
     app.run(host="0.0.0.0", port=port)
