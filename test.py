@@ -56,6 +56,7 @@ def createRichmenu():
     richMenuId = line_bot_api.create_rich_menu(
         rich_menu=rich_menu_to_create)
 
+
     # upload an image for rich menu
     path = 'Wave.png'
 
@@ -67,8 +68,8 @@ def createRichmenu():
 
 # check for existing richmenu
 rich_menu_list = line_bot_api.get_rich_menu_list()
-if not rich_menu_list:
-    createRichmenu()
+
+createRichmenu()
 
 @app.route("/callback", methods=["POST"])
 def callback():
