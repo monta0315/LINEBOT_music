@@ -38,18 +38,18 @@ youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
 def createRichmenu():
     rich_menu_to_create = RichMenu(
-        size=RichMenuSize(width=1200, height=405),
+        size=RichMenuSize(width=1200, height=600),
         selected=True,
         name='richmenu',
         chat_bar_text='TAP HERE',
         areas=[
             RichMenuArea(
-                bounds=RichMenuBounds(x=0, y=0, width=600, height=405),
-                action=MessageAction(text="PUSH YOU")
+                bounds=RichMenuBounds(x=0, y=0, width=600, height=600),
+                action=MessageAction(text="MY FAV")
             ),
             RichMenuArea(
-                bounds=RichMenuBounds(x=480, y=0, width=600, height=405),
-                action=MessageAction(text="PULL ME")
+                bounds=RichMenuBounds(x=600, y=0, width=600, height=600),
+                action=MessageAction(text="UR FAV")
             )
         ]
     )
@@ -57,16 +57,18 @@ def createRichmenu():
         rich_menu=rich_menu_to_create)
 
     # upload an image for rich menu
-    path = 'PUSH!!.png'
+    path = 'wave.png'
 
     with open(path, 'rb') as f:
         line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
 
     # set the default rich menu
     line_bot_api.set_default_rich_menu(richMenuId)
-# check for existing richmenu
 
-createRichmenu()
+# check for existing richmenu
+rich_menu_list = line_bot_api.get_rich_menu_list()
+if not rich_menu_list:
+    createRichmenu()
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -92,7 +94,7 @@ def handle_message(event):
     #送信されたテキスト
     push_text = event.message.text
 
-    if push_text == "おすすめ":
+    if push_text == "UR FAV":
         push_videos(event)
 
     else:
