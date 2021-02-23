@@ -36,9 +36,7 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
 # check for existing richmenu
-rich_menu_list = line_bot_api.get_rich_menu_list()
-if not rich_menu_list:
-    result = createRichmenu()
+createRichmenu(line_bot_api)
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -296,13 +294,10 @@ def msg_created(title, img_url, video_url, profile_name):
     return contents
 
 def createRichmenu():
-    result = False
-    try:
-        # define a new richmenu
-        rich_menu_to_create = RichMenu(
+    rich_menu_to_create = RichMenu(
             size=RichMenuSize(width=1200, height=405),
             selected=True,
-            name='richmenu for randomchat',
+            name='richmenu',
             chat_bar_text='TAP HERE',
             areas=[
                 RichMenuArea(
@@ -315,24 +310,19 @@ def createRichmenu():
                 )
             ]
         )
-        richMenuId = line_bot_api.create_rich_menu(
+    richMenuId = line_bot_api.create_rich_menu(
             rich_menu=rich_menu_to_create)
 
-        # upload an image for rich menu
-        path = 'PUSH!!.png'
+    # upload an image for rich menu
+    path = 'PUSH!!.png'
 
-        with open(path, 'rb') as f:
-            line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
+    with open(path, 'rb') as f:
+        line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
 
-        # set the default rich menu
-        line_bot_api.set_default_rich_menu(richMenuId)
 
-        result = True
+    # set the default rich menu
+    line_bot_api.set_default_rich_menu(richMenuId)
 
-    except Exception:
-        result = False
-
-    return result
 
 if __name__ == "__main__":
     #app.run()
