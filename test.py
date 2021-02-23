@@ -69,11 +69,13 @@ def createRichmenu():
 # check for existing richmenu
 rich_menu_list = line_bot_api.get_rich_menu_list()
 
-for rich_menu in rich_menu_list:
-    line_bot_api.delete_rich_menu(rich_menu.rich_menu_id)
+""" for rich_menu in rich_menu_list:
+    line_bot_api.delete_rich_menu(rich_menu.rich_menu_id) """
 
+if not rich_menu_list:
+    createRichmenu()
 
-createRichmenu()
+Recommend = False
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -102,7 +104,15 @@ def handle_message(event):
     if push_text == "UR FAV":
         push_videos(event)
 
-    else:
+    elif push_text == "MY FAV":
+
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text='Tell me your recommendations !!'))
+
+        Recommend = True
+
+    elif Recommend == True and push_text != "MY FAV" and push_text != "UR FAV":
+
         #pushユーザー
         profile_name = line_bot_api.get_profile(event.source.user_id).display_name
 
@@ -128,6 +138,8 @@ def handle_message(event):
 
         #メッセージを送信するフェーズ
         line_bot_api.reply_message(event.reply_token, flex_message)
+
+        Recommend = False
 
 
 
@@ -192,7 +204,7 @@ def msg_create(title,img_url,video_url,profile_name):
                         },
                         {
                             "type": "text",
-                            "text": "AtNoM",
+                            "text": profile_name,
                             "color": "#ffffff",
                             "size": "xl",
                             "flex": 4,
@@ -212,7 +224,7 @@ def msg_create(title,img_url,video_url,profile_name):
                         },
                         {
                             "type": "text",
-                            "text": profile_name,
+                            "text": "AtNoM",
                             "color": "#ffffff",
                             "size": "xl",
                             "flex": 4,
