@@ -57,7 +57,7 @@ def createRichmenu():
         rich_menu=rich_menu_to_create)
 
     # upload an image for rich menu
-    path = 'wave.png'
+    path = 'Wave.png'
 
     with open(path, 'rb') as f:
         line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
