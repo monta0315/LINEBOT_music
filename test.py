@@ -105,6 +105,7 @@ def handle_message(event):
         push_videos(event)
 
     elif push_text == "MY FAV":
+        global Recommend
         Recommend = True
         line_bot_api.reply_message(
             event.reply_token, TextSendMessage(text='Tell me your recommendations !!'))
@@ -112,7 +113,6 @@ def handle_message(event):
 
     elif Recommend == True and push_text != "MY FAV" and push_text != "UR FAV":
 
-        Recommend = False
 
         #pushユーザー
         profile_name = line_bot_api.get_profile(event.source.user_id).display_name
@@ -139,6 +139,9 @@ def handle_message(event):
 
         #メッセージを送信するフェーズ
         line_bot_api.reply_message(event.reply_token, flex_message)
+
+        global Recommend
+        Recommend = False
 
 
 
