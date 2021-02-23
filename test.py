@@ -69,7 +69,9 @@ def createRichmenu():
 # check for existing richmenu
 rich_menu_list = line_bot_api.get_rich_menu_list()
 
-createRichmenu()
+if rich_menu_list:
+    line_bot_api.delete_rich_menu(rich_menu_list.rich_menu.rich_menu_id)
+    createRichmenu()
 
 @app.route("/callback", methods=["POST"])
 def callback():
