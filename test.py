@@ -140,7 +140,6 @@ def handle_message(event):
         #メッセージを送信するフェーズ
         line_bot_api.reply_message(event.reply_token, flex_message)
 
-        global Recommend
         Recommend = False
 
 
