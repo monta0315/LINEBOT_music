@@ -58,7 +58,7 @@ def createRichmenu():
 
 
     # upload an image for rich menu
-    path = 'Wave.png'
+    path = 'MY.png'
 
     with open(path, 'rb') as f:
         line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
@@ -69,9 +69,8 @@ def createRichmenu():
 # check for existing richmenu
 rich_menu_list = line_bot_api.get_rich_menu_list()
 
-""" if rich_menu_list:
-    for rich_menu in rich_menu_list:
-        line_bot_api.delete_rich_menu(rich_menu.rich_menu_id) """
+for rich_menu in rich_menu_list:
+    line_bot_api.delete_rich_menu(rich_menu.rich_menu_id)
 
 
 createRichmenu()
