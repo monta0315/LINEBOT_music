@@ -45,11 +45,11 @@ def createRichmenu():
         areas=[
             RichMenuArea(
                 bounds=RichMenuBounds(x=0, y=0, width=600, height=600),
-                action=MessageAction(text="MY FAV")
+                action=MessageAction(text="My favorite")
             ),
             RichMenuArea(
                 bounds=RichMenuBounds(x=600, y=0, width=600, height=600),
-                action=MessageAction(text="UR FAV")
+                action=MessageAction(text="Your favorite")
             )
         ]
     )
@@ -101,17 +101,17 @@ def handle_message(event):
     #送信されたテキスト
     push_text = event.message.text
 
-    if push_text == "UR FAV":
+    if push_text == "Your favorite":
         push_videos(event)
 
-    elif push_text == "MY FAV":
+    elif push_text == "My favorite":
         global Recommend
         Recommend = True
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='Tell me your recommendations !!'))
+            event.reply_token, TextSendMessage(text='Open your Keyboard and Tell me your recommendations !!'))
 
 
-    elif Recommend == True and push_text != "MY FAV" and push_text != "UR FAV":
+    elif Recommend == True and push_text != "My favorite" and push_text != "Your favorite":
 
 
         #pushユーザー
@@ -141,6 +141,10 @@ def handle_message(event):
         line_bot_api.reply_message(event.reply_token, flex_message)
 
         Recommend = False
+
+    else:
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text='Please push  UR FAV or MY FAV !!'))
 
 
 
