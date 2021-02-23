@@ -69,10 +69,10 @@ def createRichmenu():
 # check for existing richmenu
 rich_menu_list = line_bot_api.get_rich_menu_list()
 
-for rich_menu in rich_menu_list:
-    line_bot_api.delete_rich_menu(rich_menu.rich_menu_id)
-
-createRichmenu()
+""" for rich_menu in rich_menu_list:
+    line_bot_api.delete_rich_menu(rich_menu.rich_menu_id) """
+if not rich_menu_list:
+    createRichmenu()
 
 Recommend = False
 
