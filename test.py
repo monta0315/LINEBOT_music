@@ -69,11 +69,10 @@ def createRichmenu():
 # check for existing richmenu
 rich_menu_list = line_bot_api.get_rich_menu_list()
 
-""" for rich_menu in rich_menu_list:
-    line_bot_api.delete_rich_menu(rich_menu.rich_menu_id) """
+for rich_menu in rich_menu_list:
+    line_bot_api.delete_rich_menu(rich_menu.rich_menu_id)
 
-if not rich_menu_list:
-    createRichmenu()
+createRichmenu()
 
 Recommend = False
 
@@ -144,7 +143,7 @@ def handle_message(event):
 
     else:
         line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='Please push  UR FAV or MY FAV !!'))
+            event.reply_token, TextSendMessage(text='Please push MY FAV or UR FAV !!'))
 
 
 
