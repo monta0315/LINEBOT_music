@@ -35,8 +35,38 @@ handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
 youtube = build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
 
+
+def createRichmenu():
+    rich_menu_to_create = RichMenu(
+        size=RichMenuSize(width=1200, height=405),
+        selected=True,
+        name='richmenu',
+        chat_bar_text='TAP HERE',
+        areas=[
+            RichMenuArea(
+                bounds=RichMenuBounds(x=0, y=0, width=600, height=405),
+                action=MessageAction(text="PUSH YOU")
+            ),
+            RichMenuArea(
+                bounds=RichMenuBounds(x=480, y=0, width=600, height=405),
+                action=MessageAction(text="PULL ME")
+            )
+        ]
+    )
+    richMenuId = line_bot_api.create_rich_menu(
+        rich_menu=rich_menu_to_create)
+
+    # upload an image for rich menu
+    path = 'PUSH!!.png'
+
+    with open(path, 'rb') as f:
+        line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
+
+    # set the default rich menu
+    line_bot_api.set_default_rich_menu(richMenuId)
 # check for existing richmenu
-createRichmenu(line_bot_api)
+
+createRichmenu()
 
 @app.route("/callback", methods=["POST"])
 def callback():
@@ -293,35 +323,6 @@ def msg_created(title, img_url, video_url, profile_name):
     }
     return contents
 
-def createRichmenu():
-    rich_menu_to_create = RichMenu(
-            size=RichMenuSize(width=1200, height=405),
-            selected=True,
-            name='richmenu',
-            chat_bar_text='TAP HERE',
-            areas=[
-                RichMenuArea(
-                    bounds=RichMenuBounds(x=0, y=0, width=600, height=405),
-                    action=MessageAction(text="PUSH YOU")
-                ),
-                RichMenuArea(
-                    bounds=RichMenuBounds(x=480, y=0, width=600, height=405),
-                    action=MessageAction(text="PULL ME")
-                )
-            ]
-        )
-    richMenuId = line_bot_api.create_rich_menu(
-            rich_menu=rich_menu_to_create)
-
-    # upload an image for rich menu
-    path = 'PUSH!!.png'
-
-    with open(path, 'rb') as f:
-        line_bot_api.set_rich_menu_image(richMenuId, "image/jpeg", f)
-
-
-    # set the default rich menu
-    line_bot_api.set_default_rich_menu(richMenuId)
 
 
 if __name__ == "__main__":
