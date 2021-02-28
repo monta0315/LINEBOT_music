@@ -132,14 +132,15 @@ def handle_message(event):
         insert_table(pushes)
 
         #flex_boxに変換
-        flex_message = FlexSendMessage(
+        reply_message = [FlexSendMessage(
             alt_text=title,
-            contents=msg_create(title,img_url,video_url,profile_name,"AtNoM"))
+            contents=msg_create(title,img_url,video_url,profile_name,"AtNoM"))]
+
+        reply_message.append(TextSendMessage(
+            text='Thanks for telling me !!'))
 
         #メッセージを送信するフェーズ
-        line_bot_api.reply_message(event.reply_token, flex_message)
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text='Thanks for telling me about it !'))
+        line_bot_api.reply_message(event.reply_token, reply_message)
         Recommend = False
 
     else:
