@@ -3,7 +3,6 @@ import json
 from linebot.models import TextSendMessage, FlexSendMessage
 import os
 
-YOUTUBE_API_KEY = "AIzaSyDWbuxE3tzF4RMnCjC045fPy5Cp9GYRHXM"
 
 youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
 
